@@ -4,7 +4,6 @@ import {
   SET_USER_LOADED,
   SET_AUTH_ERROR,
   SET_TOKEN,
-  SET_TOKEN_LOCAL_STORAGE,
 } from "../constants/types";
 
 const registrerSuccess = (payload) => ({
@@ -27,21 +26,9 @@ const authError = (payload) => ({
   payload,
 });
 
-const getToken = (payload) => ({
+const setToken = (payload) => ({
   type: SET_TOKEN,
   payload,
 });
 
-const getTokenFromLocalStorage = (payload) => ({
-  type: SET_TOKEN_LOCAL_STORAGE,
-  payload,
-});
-
-export {
-  registrerSuccess,
-  registrerFail,
-  userLoaded,
-  authError,
-  getToken,
-  getTokenFromLocalStorage,
-};
+export { registrerSuccess, registrerFail, userLoaded, authError, setToken };

@@ -26,6 +26,7 @@ const authReducer = (state = initialState, action) => {
         isAuthenticated: true,
         user: action.user,
         token: action.token,
+        refreshToken: action.refreshToken,
         error: null,
         loading: false,
         logoutAt: action.logoutAt,
@@ -36,6 +37,7 @@ const authReducer = (state = initialState, action) => {
         isAuthenticated: false,
         user: null,
         token: null,
+        refreshToken: null,
         error: action.error,
         loading: false,
         logoutAt: null,
@@ -45,10 +47,6 @@ const authReducer = (state = initialState, action) => {
         ...state,
         isAuthenticated: true,
         user: action.user,
-        token: action.token,
-        error: null,
-        loading: false,
-        logoutAt: action.logoutAt,
       };
     case SET_TOKEN:
       return {

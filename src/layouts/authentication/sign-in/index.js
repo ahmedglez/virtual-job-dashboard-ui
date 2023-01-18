@@ -22,10 +22,33 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 // Images
 import bgSignIn from "assets/images/signInImage.png";
 
+// Services
+import authServices from "services/auth.services";
+
 function SignIn() {
-  const [rememberMe, setRememberMe] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
+  const handleChangeEmail = (event) => setEmail(event.target.value);
+  const handleChangePassword = (event) => setPassword(event.target.value);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setLoading(true);
+    authServices
+      .signIn(email, password)
+      .then((response) => {
+        console.log(response);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+        setError(true);
+      });
+  };
 
   return (
     <CoverLayout
@@ -51,7 +74,12 @@ function SignIn() {
               palette.gradients.borderLight.angle
             )}
           >
-            <VuiInput type="email" placeholder="Escribe tu correo aquí..." fontWeight="500" />
+            <VuiInput
+              type="email"
+              placeholder="Escribe tu correo aquí..."
+              fontWeight="500"
+              onChange={handleChangeEmail}
+            />
           </GradientBorder>
         </VuiBox>
         <VuiBox mb={2}>
@@ -73,26 +101,12 @@ function SignIn() {
             <VuiInput
               type="password"
               placeholder="Escibe tu contraseña aquí..."
-              sx={({ typography: { size } }) => ({
-                fontSize: size.sm,
-              })}
+              onChange={handleChangePassword}
             />
           </GradientBorder>
         </VuiBox>
-        <VuiBox display="flex" alignItems="center">
-          <VuiSwitch color="info" checked={rememberMe} onChange={handleSetRememberMe} />
-          <VuiTypography
-            variant="caption"
-            color="white"
-            fontWeight="medium"
-            onClick={handleSetRememberMe}
-            sx={{ cursor: "pointer", userSelect: "none" }}
-          >
-            &nbsp;&nbsp;&nbsp;&nbsp; Recordarme
-          </VuiTypography>
-        </VuiBox>
         <VuiBox mt={4} mb={1}>
-          <VuiButton color="info" fullWidth >
+          <VuiButton color="info" fullWidth onClick={handleSubmit}>
             Iniciar sesión
           </VuiButton>
         </VuiBox>
