@@ -1,9 +1,7 @@
-require("dotenv").config();
-
-module.exports = {
+const globalConfig = {
   development: {
-    api_url: process.env.API_URL,
-    login_url: process.env.LOGIN_URL,
-    logout_url: process.env.LOGOUT_URL,
+    api_url: "https://virtual-job-board.vercel.app/",
   },
 };
+
+export default globalConfig;

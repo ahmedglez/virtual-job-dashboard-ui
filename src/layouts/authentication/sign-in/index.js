@@ -23,31 +23,32 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 import bgSignIn from "assets/images/signInImage.png";
 
 // Services
-import authServices from "services/auth.services";
+import { signIn } from "services/auth.services";
+
+// React
+import { useDispatch, connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 function SignIn() {
+  const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("ahmediglez@gmail.com");
+  const [password, setPassword] = useState("admin1234");
 
-  const handleSetRememberMe = () => setRememberMe(!rememberMe);
   const handleChangeEmail = (event) => setEmail(event.target.value);
   const handleChangePassword = (event) => setPassword(event.target.value);
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = async () => {
     setLoading(true);
-    authServices
-      .signIn(email, password)
-      .then((response) => {
-        console.log(response);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-        setError(true);
-      });
+    const data = await signIn(email, password);
+    console.log(data);
+    if (data.token) {
+      history.push("/dashboard");
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+      }
+    }
+    setLoading(false);
   };
 
   return (
@@ -106,9 +107,27 @@ function SignIn() {
           </GradientBorder>
         </VuiBox>
         <VuiBox mt={4} mb={1}>
-          <VuiButton color="info" fullWidth onClick={handleSubmit}>
-            Iniciar sesión
-          </VuiButton>
+          {error && (
+            <VuiTypography variant="button" color="error" fontWeight="medium">
+              Error al iniciar sesión
+            </VuiTypography>
+          )}
+          {loading === true ? (
+            <VuiButton variant="contained" color="primary" size="large" fullWidth disabled>
+              Iniciando sesión...
+            </VuiButton>
+          ) : (
+            <VuiButton
+              type="submit"
+              variant="contained"
+              color="primary"
+              size="large"
+              fullWidth
+              onClick={() => handleSubmit()}
+            >
+              Iniciar sesión
+            </VuiButton>
+          )}
         </VuiBox>
         <VuiBox mt={3} textAlign="center">
           <VuiTypography variant="button" color="text" fontWeight="regular">
