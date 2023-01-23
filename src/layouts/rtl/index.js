@@ -31,7 +31,7 @@ import VuiTypography from "components/VuiTypography";
 
 // Vision UI Dashboard React contexts
 import { setDirection, useVisionUIController } from "context";
-import MiniStatisticsCard from "examples/Cards/StatisticsCards/MiniStatisticsCard";
+import MiniTasksCard from "examples/Cards/StatisticsCards/MiniTasksCard";
 import BarChart from "examples/Charts/BarCharts/BarChart";
 
 // Data
@@ -78,7 +78,7 @@ function RTL() {
         <VuiBox mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6} xl={3}>
-              <MiniStatisticsCard
+              <MiniTasksCard
                 title={{ text: "أموال اليوم", fontWeight: "regular" }}
                 count="$53,000"
                 percentage={{ color: "success", text: "+55%" }}
@@ -86,7 +86,7 @@ function RTL() {
               />
             </Grid>
             <Grid item xs={12} sm={6} xl={3}>
-              <MiniStatisticsCard
+              <MiniTasksCard
                 title={{ text: "مستخدمي اليوم" }}
                 count="2,300"
                 percentage={{ color: "success", text: "+3%" }}
@@ -94,7 +94,7 @@ function RTL() {
               />
             </Grid>
             <Grid item xs={12} sm={6} xl={3}>
-              <MiniStatisticsCard
+              <MiniTasksCard
                 title={{ text: "عملاء جدد" }}
                 count="+3,462"
                 percentage={{ color: "error", text: "-2%" }}
@@ -102,7 +102,7 @@ function RTL() {
               />
             </Grid>
             <Grid item xs={12} sm={6} xl={3}>
-              <MiniStatisticsCard
+              <MiniTasksCard
                 title={{ text: "إجمالي المبيعات" }}
                 count="$103,430"
                 percentage={{ color: "success", text: "+5%" }}

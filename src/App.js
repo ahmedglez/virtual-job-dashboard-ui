@@ -1,15 +1,14 @@
-import { useState, useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 // react-router components
-import { Route, Switch, Redirect, useLocation } from "react-router-dom";
+import { Redirect, Route, Switch, useLocation } from "react-router-dom";
 
 // @mui material components
-import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import Icon from "@mui/material/Icon";
+import { ThemeProvider } from "@mui/material/styles";
 
 // Vision UI Dashboard React components
-import VuiBox from "components/VuiBox";
+import Configurator from "examples/Configurator";
 
 // Vision UI Dashboard React example components
 import Sidenav from "examples/Sidenav";
@@ -19,19 +18,19 @@ import theme from "assets/theme";
 import themeRTL from "assets/theme/theme-rtl";
 
 // RTL plugins
-import rtlPlugin from "stylis-plugin-rtl";
-import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
+import { CacheProvider } from "@emotion/react";
+import rtlPlugin from "stylis-plugin-rtl";
 
 // Vision UI Dashboard React routes
 import routes from "routes";
 
 // Vision UI Dashboard React contexts
-import { useVisionUIController, setMiniSidenav } from "context";
+import { setMiniSidenav, useVisionUIController } from "context";
 
 export default function App() {
   const [controller, dispatch] = useVisionUIController();
-  const { miniSidenav, direction, layout, sidenavColor } = controller;
+  const { miniSidenav, direction, layout, sidenavColor, openConfigurator } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const [rtlCache, setRtlCache] = useState(null);
   const { pathname } = useLocation();
@@ -124,6 +123,7 @@ export default function App() {
         </>
       )}
       <Switch>
+        {openConfigurator && <Configurator />}
         {getRoutes(routes)}
         <Redirect from="*" to="/dashboard" />
       </Switch>

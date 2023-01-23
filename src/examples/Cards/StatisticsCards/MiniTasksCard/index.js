@@ -31,7 +31,7 @@ import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
 import colors from "assets/theme/base/colors";
 
-function MiniStatisticsCard({ bgColor, title, status, priority, direction }) {
+function MiniTasksCard({ bgColor, title, status, priority, direction }) {
   const { info } = colors;
 
   const icon = { color: "info", component: <AssignmentIcon size="22px" color="white" /> };
@@ -103,8 +103,8 @@ function MiniStatisticsCard({ bgColor, title, status, priority, direction }) {
   );
 }
 
-// Setting default values for the props of MiniStatisticsCard
-MiniStatisticsCard.defaultProps = {
+// Setting default values for MiniTasksCard the props of 
+MiniTasksCard.defaultProps = {
   bgColor: "white",
   title: {
     fontWeight: "medium",
@@ -117,8 +117,8 @@ MiniStatisticsCard.defaultProps = {
   direction: "right",
 };
 
-// Typechecking props for the MiniStatisticsCard
-MiniStatisticsCard.propTypes = {
+// Typechecking props for the MiniTasksCard
+MiniTasksCard.propTypes = {
   bgColor: PropTypes.oneOf([
     "white",
     "primary",
@@ -154,4 +154,4 @@ MiniStatisticsCard.propTypes = {
   direction: PropTypes.oneOf(["right", "left"]),
 };
 
-export default MiniStatisticsCard;
+export default MiniTasksCard;

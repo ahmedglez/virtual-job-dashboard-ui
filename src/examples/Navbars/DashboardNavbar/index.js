@@ -112,6 +112,8 @@ function DashboardNavbar({ absolute, light, isMini }) {
       onClose={handleCloseMenu}
       sx={{ mt: 2 }}
     >
+
+      
       <NotificationItem
         image={<img src={team2} alt="person" />}
         title={["New message", "from Laur"]}

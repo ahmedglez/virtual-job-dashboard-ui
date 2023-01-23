@@ -25,7 +25,6 @@ const WelcomeMark = () => {
           </VuiTypography>
           <VuiTypography color="text" variant="h6" fontWeight="regular" mb="auto">
             Glad to see you again!
-            <br /> Ask me anything.
           </VuiTypography>
         </VuiBox>
         <VuiTypography
@@ -51,7 +50,7 @@ const WelcomeMark = () => {
             },
           }}
         >
-          Tap to record
+          Tap to see your profile
           <Icon sx={{ fontWeight: "bold", ml: "5px" }}>arrow_forward</Icon>
         </VuiTypography>
       </VuiBox>

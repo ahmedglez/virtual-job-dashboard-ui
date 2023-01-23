@@ -1,21 +1,3 @@
-/*!
-
-=========================================================
-* Vision UI Free React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/vision-ui-free-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com/)
-* Licensed under MIT (https://github.com/creativetimofficial/vision-ui-free-react/blob/master LICENSE.md)
-
-* Design and Coded by Simmmple & Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
 // prop-types is library for typechecking of props
 import PropTypes from "prop-types";
 
@@ -28,10 +10,9 @@ import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
 
 // Vision UI Dashboard React base styles
-import colors from "assets/theme/base/colors";
 import typography from "assets/theme/base/typography";
 
-function ProfileInfoCard({ title, description, info, social }) {
+function ProfileInfoCard({ title, info }) {
   const labels = [];
   const values = [];
   const { size } = typography;
@@ -63,24 +44,6 @@ function ProfileInfoCard({ title, description, info, social }) {
     </VuiBox>
   ));
 
-  // Render the card social media icons
-  const renderSocial = social.map(({ link, icon, color }) => (
-    <VuiBox
-      key={color}
-      component="a"
-      href={link}
-      target="_blank"
-      rel="noreferrer"
-      fontSize={size.lg}
-      color="white"
-      pr={1}
-      pl={0.5}
-      lineHeight={1}
-    >
-      {icon}
-    </VuiBox>
-  ));
-
   return (
     <Card
       sx={{
@@ -93,11 +56,6 @@ function ProfileInfoCard({ title, description, info, social }) {
         </VuiTypography>
       </VuiBox>
       <VuiBox>
-        <VuiBox mb={2} lineHeight={1}>
-          <VuiTypography variant="button" color="text" fontWeight="regular">
-            {description}
-          </VuiTypography>
-        </VuiBox>
         <VuiBox opacity={0.3}>
           <Divider />
         </VuiBox>
@@ -109,10 +67,7 @@ function ProfileInfoCard({ title, description, info, social }) {
               fontWeight="regular"
               color="text"
               textTransform="capitalize"
-            >
-              social: &nbsp;
-            </VuiTypography>
-            {renderSocial}
+            ></VuiTypography>
           </VuiBox>
         </VuiBox>
       </VuiBox>
@@ -123,9 +78,7 @@ function ProfileInfoCard({ title, description, info, social }) {
 // Typechecking props for the ProfileInfoCard
 ProfileInfoCard.propTypes = {
   title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
   info: PropTypes.objectOf(PropTypes.string).isRequired,
-  social: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default ProfileInfoCard;
