@@ -1,21 +1,3 @@
-/*!
-
-=========================================================
-* Vision UI Free React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/vision-ui-free-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com/)
-* Licensed under MIT (https://github.com/creativetimofficial/vision-ui-free-react/blob/master LICENSE.md)
-
-* Design and Coded by Simmmple & Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
@@ -51,6 +33,7 @@ import { IoBuild } from "react-icons/io5";
 import { IoWallet } from "react-icons/io5";
 import { IoDocumentText } from "react-icons/io5";
 import { FaShoppingCart } from "react-icons/fa";
+import AssignmentIcon from "@mui/icons-material/Assignment";
 
 // Data
 import LineChart from "examples/Charts/LineCharts/LineChart";
@@ -70,36 +53,28 @@ function Dashboard() {
       <VuiBox py={3}>
         <VuiBox mb={3}>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={6} xl={3}>
+            <Grid item xs={12} md={6} xl={4}>
               <MiniStatisticsCard
-                title={{ text: "today's money", fontWeight: "regular" }}
-                count="$53,000"
-                percentage={{ color: "success", text: "+55%" }}
-                icon={{ color: "info", component: <IoWallet size="22px" color="white" /> }}
+                title={{ text: "Ir a casa de cliente #1", fontWeight: "regular" }}
+                status={"pendiente"}
+                priority={{ color: "success", text: "low" }}
               />
             </Grid>
-            <Grid item xs={12} md={6} xl={3}>
+            <Grid item xs={12} md={6} xl={4}>
               <MiniStatisticsCard
-                title={{ text: "today's users" }}
-                count="2,300"
-                percentage={{ color: "success", text: "+3%" }}
-                icon={{ color: "info", component: <IoGlobe size="22px" color="white" /> }}
+                title={{ text: "Comprobar camaras en casa de Ivan Chef" }}
+                status={"activo"}
+                priority={{
+                  color: "info",
+                  text: "medium",
+                }}
               />
             </Grid>
-            <Grid item xs={12} md={6} xl={3}>
+            <Grid item xs={12} md={6} xl={4}>
               <MiniStatisticsCard
-                title={{ text: "new clients" }}
-                count="+3,462"
-                percentage={{ color: "error", text: "-2%" }}
-                icon={{ color: "info", component: <IoDocumentText size="22px" color="white" /> }}
-              />
-            </Grid>
-            <Grid item xs={12} md={6} xl={3}>
-              <MiniStatisticsCard
-                title={{ text: "total sales" }}
-                count="$103,430"
-                percentage={{ color: "success", text: "+5%" }}
-                icon={{ color: "info", component: <FaShoppingCart size="20px" color="white" /> }}
+                title={{ text: "Arreglar cancelas en Varadero" }}
+                status={"terminada"}
+                priority={{ color: "warning", text: "high" }}
               />
             </Grid>
           </Grid>

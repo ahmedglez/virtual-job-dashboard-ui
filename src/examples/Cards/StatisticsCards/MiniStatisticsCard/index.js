@@ -23,14 +23,18 @@ import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+
 
 // Vision UI Dashboard React components
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
 import colors from "assets/theme/base/colors";
 
-function MiniStatisticsCard({ bgColor, title, count, percentage, icon, direction }) {
+function MiniStatisticsCard({ bgColor, title, status, priority, direction }) {
   const { info } = colors;
+
+  const icon = { color: "info", component: <AssignmentIcon size="22px" color="white" /> };
 
   return (
     <Card sx={{ padding: "17px" }}>
@@ -54,22 +58,21 @@ function MiniStatisticsCard({ bgColor, title, count, percentage, icon, direction
                 </VuiBox>
               </Grid>
             ) : null}
-            <Grid item xs={8}>
-              <VuiBox ml={direction === "left" ? 2 : 0} lineHeight={1}>
+            <Grid item xs={8} direction={"column"}>
+              <VuiBox lineHeight={1}>
                 <VuiTypography
-                  variant="caption"
+                  variant="h5"
                   color={bgColor === "white" ? "text" : "white"}
                   opacity={bgColor === "white" ? 1 : 0.7}
-                  textTransform="capitalize"
                   fontWeight={title.fontWeight}
                 >
                   {title.text}
                 </VuiTypography>
                 <VuiTypography variant="subtitle1" fontWeight="bold" color="white">
-                  {count}{" "}
-                  <VuiTypography variant="button" color={percentage.color} fontWeight="bold">
-                    {percentage.text}
-                  </VuiTypography>
+                  {status}
+                </VuiTypography>
+                <VuiTypography variant="button" color={priority.color} fontWeight="bold">
+                  {priority.text}
                 </VuiTypography>
               </VuiBox>
             </Grid>
@@ -107,7 +110,7 @@ MiniStatisticsCard.defaultProps = {
     fontWeight: "medium",
     text: "",
   },
-  percentage: {
+  priority: {
     color: "success",
     text: "",
   },
@@ -131,7 +134,7 @@ MiniStatisticsCard.propTypes = {
     text: PropTypes.string,
   }),
   count: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  percentage: PropTypes.shape({
+  priority: PropTypes.shape({
     color: PropTypes.oneOf([
       "primary",
       "secondary",
