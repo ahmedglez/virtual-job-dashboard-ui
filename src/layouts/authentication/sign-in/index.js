@@ -40,15 +40,16 @@ function SignIn() {
   const handleChangePassword = (event) => setPassword(event.target.value);
   const handleSubmit = async () => {
     setLoading(true);
-    const data = await signIn(email, password);
-    console.log(data);
-    if (data.token) {
-      history.push("/dashboard");
-      if (data.token) {
-        localStorage.setItem("token", data.token);
-      }
+    try {
+      const response = await signIn(email, password);
+      console.log(response);
+      history.push("/admin/dashboard");
+    } catch (error) {
+      setError(true);
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (

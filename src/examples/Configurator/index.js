@@ -1,23 +1,24 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-// react-github-btn
-import GitHubButton from "react-github-btn";
+// react-router-dom
+import { Link as RouterLink } from "react-router-dom";
 
 // @mui material components
 import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import Link from "@mui/material/Link";
 import Icon from "@mui/material/Icon";
+import Link from "@mui/material/Link";
+import IconButton from "@mui/material/IconButton";
+
 
 // @mui icons
-import TwitterIcon from "@mui/icons-material/Twitter";
 import FacebookIcon from "@mui/icons-material/Facebook";
+import TwitterIcon from "@mui/icons-material/Twitter";
 
 // Vision UI Dashboard React components
 import VuiBox from "components/VuiBox";
-import VuiTypography from "components/VuiTypography";
 import VuiButton from "components/VuiButton";
 import VuiSwitch from "components/VuiSwitch";
+import VuiTypography from "components/VuiTypography";
 
 // Custom styles for the Configurator
 import ConfiguratorRoot from "examples/Configurator/ConfiguratorRoot";
@@ -28,8 +29,8 @@ import {
   setOpenConfigurator,
   setTransparentSidenav,
   setFixedNavbar,
+  setSidenavColor,
 } from "context";
-
 function Configurator() {
   const [controller, dispatch] = useVisionUIController();
   const { openConfigurator, transparentSidenav, fixedNavbar, sidenavColor } = controller;
@@ -55,6 +56,8 @@ function Configurator() {
 
   const handleCloseConfigurator = () => setOpenConfigurator(dispatch, false);
   const handleFixedNavbar = () => setFixedNavbar(dispatch, !fixedNavbar);
+  const handleTransparentSidenav = () => setTransparentSidenav(dispatch, true);
+  const handleWhiteSidenav = () => setTransparentSidenav(dispatch, false);
 
   // sidenav type buttons styles
   const sidenavTypeButtonsStyles = ({
@@ -121,57 +124,101 @@ function Configurator() {
               mt: 2,
             }}
           >
-            <VuiButton
-              color="info"
-              variant="contained"
-              fullWidth
-              sx={{
-                mr: 1,
-                ...sidenavTypeButtonsStyles,
-              }}
-            >
-              <Icon
-                sx={({ typography: { size, fontWeightBold }, palette: { white, dark } }) => ({
-                  fontSize: `${size.md} !important`,
-                  fontWeight: `${fontWeightBold} !important`,
-                  stroke: `${white.main} !important`,
-                  strokeWidth: "2px",
-                })}
+            <RouterLink to="/profile" onClick={handleCloseConfigurator}>
+              <VuiButton
+                color="info"
+                variant="contained"
+                fullWidth
+                sx={{
+                  mr: 1,
+                  ...sidenavTypeButtonsStyles,
+                }}
               >
-                person
-              </Icon>
+                <Icon
+                  sx={({ typography: { size, fontWeightBold }, palette: { white, dark } }) => ({
+                    fontSize: `${size.md} !important`,
+                    fontWeight: `${fontWeightBold} !important`,
+                    stroke: `${white.main} !important`,
+                    strokeWidth: "2px",
+                  })}
+                >
+                  person
+                </Icon>
 
-              <VuiTypography variant="button" color="white" fontWeight="bold" ml={1}>
-                Profile
-              </VuiTypography>
-            </VuiButton>
-
-            <VuiButton
-              color="info"
-              variant="outlined"
-              fullWidth
-              sx={{
-                ...sidenavTypeButtonsStyles,
+                <VuiTypography variant="button" color="white" fontWeight="bold" ml={1}>
+                  Profile
+                </VuiTypography>
+              </VuiButton>
+            </RouterLink>
+            <RouterLink
+              to={{
+                pathname: "/profile",
+                hash: "profileSettingsRouter",
               }}
+              onClick={handleCloseConfigurator}
             >
-              <Icon
-                sx={({ typography: { size, fontWeightBold }, palette: { white, dark } }) => ({
-                  fontSize: `${size.md} !important`,
-                  fontWeight: `${fontWeightBold} !important`,
-                  stroke: `${white.main} !important`,
-                  strokeWidth: "2px",
-                })}
+              <VuiButton
+                color="info"
+                variant="outlined"
+                fullWidth
+                sx={{
+                  ...sidenavTypeButtonsStyles,
+                }}
               >
-                settings
-              </Icon>
+                <Icon
+                  sx={({ typography: { size, fontWeightBold }, palette: { white, dark } }) => ({
+                    fontSize: `${size.md} !important`,
+                    fontWeight: `${fontWeightBold} !important`,
+                    stroke: `${white.main} !important`,
+                    strokeWidth: "2px",
+                  })}
+                >
+                  settings
+                </Icon>
 
-              <VuiTypography variant="button" color="white" fontWeight="bold" ml={1}>
-                Settings
-              </VuiTypography>
-            </VuiButton>
+                <VuiTypography variant="button" color="white" fontWeight="bold" ml={1}>
+                  Settings
+                </VuiTypography>
+              </VuiButton>
+            </RouterLink>
           </VuiBox>
 
           <Divider light sx={{ mt: 4 }} />
+        </VuiBox>
+        <VuiBox>
+          <VuiTypography variant="h6" color="white">
+            Sidenav Colors
+          </VuiTypography>
+
+          <VuiBox mb={0.5}>
+            {sidenavColors.map((color) => (
+              <IconButton
+                key={color}
+                sx={({ borders: { borderWidth }, palette: { white, dark }, transitions }) => ({
+                  width: "24px",
+                  height: "24px",
+                  padding: 0,
+                  border: `${borderWidth[1]} solid ${white.main}`,
+                  borderColor: sidenavColor === color && dark.main,
+                  transition: transitions.create("border-color", {
+                    easing: transitions.easing.sharp,
+                    duration: transitions.duration.shorter,
+                  }),
+                  backgroundImage: ({ functions: { linearGradient }, palette: { gradients } }) =>
+                    linearGradient(gradients[color].main, gradients[color].state),
+
+                  "&:not(:last-child)": {
+                    mr: 1,
+                  },
+
+                  "&:hover, &:focus, &:active": {
+                    borderColor: dark.main,
+                  },
+                })}
+                onClick={() => setSidenavColor(dispatch, color)}
+              />
+            ))}
+          </VuiBox>
         </VuiBox>
         {window.innerWidth >= 1440 && (
           <VuiBox mt={3} lineHeight={1}>

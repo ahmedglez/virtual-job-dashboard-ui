@@ -7,15 +7,11 @@ import VuiBox from "components/VuiBox/index";
 const Welcome = () => {
   return (
     <Card
-      sx={({ breakpoints }) => ({
+      sx={{
         background: `url(${welcome})`,
         backgroundSize: "cover",
         borderRadius: "20px",
-        height: "50%",
-        [breakpoints.only("xl")]: {
-          gridArea: "1 / 1 / 2 / 2",
-        },
-      })}
+      }}
     >
       <VuiBox display="flex" flexDirection="column" sx={{ height: "100%" }}>
         <VuiBox display="flex" flexDirection="column" mb="auto">
