@@ -1,6 +1,6 @@
 const globalConfig = {
   development: {
-    api_url: "https://virtual-job-board.vercel.app/",
+    api_url: "https://work-team-manager.vercel.app/",
   },
 };
 

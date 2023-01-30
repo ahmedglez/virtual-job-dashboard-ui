@@ -7,6 +7,7 @@ import {
   SET_LOGOUT_AT,
   SET_IS_AUTHENTICATED,
 } from "../constants/types";
+import LocalStorageUtils from "../utils/localStorageUtils";
 
 const initialState = {
   isAuthenticated: false,
@@ -21,15 +22,16 @@ const initialState = {
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_LOGIN_SUCCESS:
+      LocalStorageUtils.setToken(action.token);
+      LocalStorageUtils.setRefreshToken(action.refreshToken);
       return {
         ...state,
         isAuthenticated: true,
-        user: action.user,
-        token: action.token,
-        refreshToken: action.refreshToken,
+        token: action.payload.token,
+        refreshToken: action.payload.refreshToken,
         error: null,
         loading: false,
-        logoutAt: action.logoutAt,
+        logoutAt: action.payload.logoutAt,
       };
     case SET_LOGIN_FAIL:
       return {

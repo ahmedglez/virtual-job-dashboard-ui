@@ -1,18 +1,21 @@
-import axios from "axios";
+import axiosInstance  from "constants/axiosInstance";
 import globalConfig from "config/global.config";
-import LocalStorageUtils from "utils/localStorageUtils";
 
-const API_URL = globalConfig.development.api_url;
+const axios = axiosInstance;
 
-const signIn = async (email, password) => {
-  const response = await axios.post(`${API_URL}login`, {
-    email,
-    password,
-  });
-  if (response.data.token) {
-    LocalStorageUtils.setToken(response.data.token);
-  }
-  return response.data;
+
+const AuthenticationServices = () => {
+  const signIn = async (email, password) => {
+    const response = await axios.post("login", {
+      email,
+      password,
+    });   
+    return response.data;
+  };
+
+  return {
+    signIn,
+  };
 };
 
-export { signIn };
+export default AuthenticationServices;

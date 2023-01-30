@@ -26,10 +26,23 @@ import bgSignIn from "assets/images/signInImage.png";
 import { signIn } from "services/auth.services";
 
 // React
-import { useDispatch, connect } from "react-redux";
+import { useDispatch, connect, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import AuthenticationServices from "services/auth.services";
+import LocalStorageUtils from "utils/localStorageUtils";
+
+//Redux Actions
+import {
+  registrerSuccess,
+  registrerFail,
+  userLoaded,
+  authError,
+  setToken,
+} from "../../../actions/auth.actions";
 
 function SignIn() {
+  const authenticationServices = AuthenticationServices();
+  const dispatch = useDispatch();
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -41,9 +54,23 @@ function SignIn() {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const response = await signIn(email, password);
-      console.log(response);
-      history.push("/admin/dashboard");
+      const response = await authenticationServices.signIn(email, password);
+      if (response.token && response.refreshToken) {
+        const payload = {
+          token: response.token,
+          refreshToken: response.refreshToken,
+          logoutAt: new Date(new Date().getTime() + 15 * 60 * 1000),
+        };
+        dispatch({
+          type: "SET_LOGIN_SUCCESS",
+          payload: payload,
+        });
+        LocalStorageUtils.setToken(response.token);
+        LocalStorageUtils.setRefreshToken(response.refreshToken);
+        history.push("/admin/dashboard");
+      } else {
+        dispatch(registrerFail());
+      }
     } catch (error) {
       setError(true);
       console.log(error);
@@ -129,6 +156,17 @@ function SignIn() {
               Iniciar sesión
             </VuiButton>
           )}
+        </VuiBox>
+        <VuiBox textAlign="center">
+          <VuiTypography
+            variant="button"
+            component={Link}
+            to="/authentication/forgot-password"
+            color="white"
+            fontWeight="medium"
+          >
+            Olvidaste tu contraseña?
+          </VuiTypography>
         </VuiBox>
         <VuiBox mt={3} textAlign="center">
           <VuiTypography variant="button" color="text" fontWeight="regular">
