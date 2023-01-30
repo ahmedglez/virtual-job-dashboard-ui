@@ -46,36 +46,60 @@ function SignIn() {
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [email, setEmail] = useState("ahmediglez@gmail.com");
-  const [password, setPassword] = useState("admin1234");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState(null);
 
   const handleChangeEmail = (event) => setEmail(event.target.value);
   const handleChangePassword = (event) => setPassword(event.target.value);
-  const handleSubmit = async () => {
-    setLoading(true);
-    try {
-      const response = await authenticationServices.signIn(email, password);
-      if (response.token && response.refreshToken) {
-        const payload = {
-          token: response.token,
-          refreshToken: response.refreshToken,
-          logoutAt: new Date(new Date().getTime() + 15 * 60 * 1000),
-        };
-        dispatch({
-          type: "SET_LOGIN_SUCCESS",
-          payload: payload,
-        });
-        LocalStorageUtils.setToken(response.token);
-        LocalStorageUtils.setRefreshToken(response.refreshToken);
-        history.push("/admin/dashboard");
-      } else {
-        dispatch(registrerFail());
-      }
-    } catch (error) {
+  const handleValidation = () => {
+    if (email === "") {
       setError(true);
-      console.log(error);
-    } finally {
-      setLoading(false);
+      setMessage("El campo email es requerido");
+      return false;
+    }
+    if (password === "") {
+      setError(true);
+      setMessage("El campo contraseña es requerido");
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = async (e) => {
+    const isvalid = handleValidation();
+    if (isvalid) {
+      setLoading(true);
+      try {
+        const response = await authenticationServices.signIn(email, password);
+        if (response.token && response.refreshToken) {
+          const payload = {
+            token: response.token,
+            refreshToken: response.refreshToken,
+            logoutAt: new Date(new Date().getTime() + 15 * 60 * 1000),
+            username: email,
+            password: password,
+          };
+          dispatch({
+            type: "SET_LOGIN_SUCCESS",
+            payload: payload,
+          });
+          LocalStorageUtils.setToken(response.token);
+          LocalStorageUtils.setRefreshToken(response.refreshToken);
+          history.push("/admin/dashboard");
+        } else {
+          dispatch(registrerFail());
+        }
+      } catch (error) {
+        setError(true);
+        setMessage(error.message);
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      setError(true);
+      setMessage("Complete los campos requeridos");
     }
   };
 
@@ -137,7 +161,7 @@ function SignIn() {
         <VuiBox mt={4} mb={1}>
           {error && (
             <VuiTypography variant="button" color="error" fontWeight="medium">
-              Error al iniciar sesión
+              {message}
             </VuiTypography>
           )}
           {loading === true ? (

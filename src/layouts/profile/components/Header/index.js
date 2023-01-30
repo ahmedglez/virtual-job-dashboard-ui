@@ -1,5 +1,3 @@
-
-
 import AppBar from "@mui/material/AppBar";
 // @mui material components
 import Card from "@mui/material/Card";
@@ -22,7 +20,8 @@ import { IoBuild } from "react-icons/io5";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import { useEffect, useState } from "react";
 
-function Header() {
+function Header(props) {
+  const { user } = props;
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
 
@@ -61,6 +60,13 @@ function Header() {
           container
           alignItems="center"
           justifyContent="center"
+          width={{
+            xs: "100%",
+            sm: "100%",
+            md: "100%",
+            lg: "100%",
+            xl: "100%",
+          }}
           sx={({ breakpoints }) => ({
             [breakpoints.up("xs")]: {
               gap: "16px",
@@ -69,7 +75,7 @@ function Header() {
               gap: "0px",
             },
             [breakpoints.up("xl")]: {
-              gap: "0px",
+              gap: "1px",
             },
           })}
         >
@@ -92,7 +98,7 @@ function Header() {
               src={burceMars}
               alt="profile-image"
               variant="rounded"
-              size="xl"
+              size="lg"
               shadow="sm"
             />
           </Grid>
@@ -103,6 +109,12 @@ function Header() {
               lineHeight={1}
               display="flex"
               flexDirection="column"
+              marginLeft={{
+                xs: "auto",
+                sm: "auto",
+                md: "auto",
+                lg: "30px",
+              }}
               sx={({ breakpoints }) => ({
                 [breakpoints.only("sm")]: {
                   justifyContent: "center",
@@ -111,10 +123,10 @@ function Header() {
               })}
             >
               <VuiTypography variant="lg" color="white" fontWeight="bold">
-                Mark Johnson
+                {user !== null ? user.name : ""}
               </VuiTypography>
               <VuiTypography variant="button" color="text" fontWeight="regular">
-                mark@simmmple.com
+                {user !== null ? user.email : ""}
               </VuiTypography>
             </VuiBox>
           </Grid>

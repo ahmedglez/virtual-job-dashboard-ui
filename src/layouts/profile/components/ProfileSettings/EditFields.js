@@ -1,5 +1,6 @@
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
+import CancelIcon from "@mui/icons-material/Cancel";
 import { Grid, TextField } from "@mui/material";
 import VuiBox from "components/VuiBox";
 import VuiButton from "components/VuiButton";
@@ -7,7 +8,7 @@ import VuiTypography from "components/VuiTypography/index";
 import { useState } from "react";
 
 const EditFields = (props) => {
-  const { label, value } = props;
+  const { label, value, setChangingPassword } = props;
   const [editMode, setEditMode] = useState(false);
   return (
     <Grid item xs={12} xl={12} xxl={12}>
@@ -57,24 +58,28 @@ const EditFields = (props) => {
         </VuiBox>
         {!editMode[0] ? (
           <VuiButton
-            onClick={() => setEditMode({ ...editMode, 0: !editMode[0] })}
+            onClick={() => {
+              setEditMode({ ...editMode, 0: !editMode[0] });
+              setChangingPassword(true);
+            }}
             variant="contained"
             color="primary"
             size="small"
             startIcon={<EditIcon />}
-          >
-            Edit
-          </VuiButton>
+          ></VuiButton>
         ) : (
-          <VuiButton
-            onClick={() => setEditMode({ ...editMode, 0: !editMode[0] })}
-            variant="contained"
-            color="primary"
-            size="small"
-            startIcon={<SaveIcon />}
-          >
-            Save
-          </VuiButton>
+          <VuiBox display="flex" alignItems="center" direction="row">
+            <VuiButton
+              onClick={() => {
+                setEditMode({ ...editMode, 0: !editMode[0] });
+                setChangingPassword(false);
+              }}
+              variant="contained"
+              color="primary"
+              size="small"
+              startIcon={<SaveIcon />}
+            ></VuiButton>
+          </VuiBox>
         )}
       </VuiBox>
     </Grid>

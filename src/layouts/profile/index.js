@@ -6,16 +6,42 @@ import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
 import Footer from "examples/Footer";
 // Vision UI Dashboard React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
+import VuiTypography from "components/VuiTypography";
 // Overview page components
 import Header from "layouts/profile/components/Header";
 import Welcome from "../profile/components/Welcome/index";
 import ProfileSettings from "./components/ProfileSettings";
 import HashLinkObserver from "react-hash-link";
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+// React
+import { useEffect, useState } from "react";
+// Services
+import ProfileServices from "services/profile.services";
+
 
 function Overview() {
+  const profileServices = ProfileServices();
+  const dispatch = useDispatch();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      const response = await profileServices.getPersonalInfo();
+      if (response) {
+        dispatch({
+          type: "SET_USER",
+          payload: response.data,
+        });
+        setUser(response.data);
+      }
+    };
+    getUserInfo();
+  }, []);
+
   return (
     <DashboardLayout>
-      <Header />
+      <Header user={user} />
       <VuiBox mb={3}>
         <Grid
           container
@@ -36,22 +62,30 @@ function Overview() {
               marginTop: "15px",
             }}
           >
-            <Welcome />
+            <Welcome user={user} />
           </Grid>
 
           <Grid item xs={12} xl={12} xxl={12}>
-            <ProfileInfoCard
-              title="profile information"
-              info={{
-                nickname: "ahmedglez",
-                fullName: "Ahmed Ivan Gonzalez Betancourt",
-                phone: "78793268",
-                mobile: "58424765",
-                email: "email",
-                ci: "00092068426",
-                address: "CONCORDIA 867/ESPADA Y SAN FRANCISCO",
-              }}
-            />
+            {user !== undefined && user !== null ? (
+              <ProfileInfoCard
+                title="profile information"
+                info={{
+                  nickname: user.nickname,
+                  fullName: user.fullname,
+                  phone: user.phone,
+                  mobile: user.mobile,
+                  email: user.email,
+                  ci: user.ci,
+                  address: user.address,
+                }}
+              />
+            ) : (
+              <VuiBox>
+                <VuiTypography variant="h4" fontWeight="bold" color="white">
+                  Loading...
+                </VuiTypography>
+              </VuiBox>
+            )}
           </Grid>
 
           <Grid
@@ -66,18 +100,19 @@ function Overview() {
           >
             <HashLinkObserver />
             <div id="profileSettingsRouter"></div>
-            <ProfileSettings
-              user={{
-                nickname: "ahmedglez",
-                fullName: "Ahmed Ivan Gonzalez Betancourt",
-                phone: "78793268",
-                mobile: "58424765",
-                email: "ahmediglez@gmail.com",
-                ci: "00092068426",
-                address: "CONCORDIA 867/ESPADA Y SAN FRANCISCO",
-                password: "admin1234",
-              }}
-            />
+            {user !== undefined && user !== null ? (
+              <ProfileSettings
+                user={{
+                  ...user,
+                }}
+              />
+            ) : (
+              <VuiBox>
+                <VuiTypography variant="h4" fontWeight="bold" color="white">
+                  Loading...
+                </VuiTypography>
+              </VuiBox>
+            )}
           </Grid>
         </Grid>
       </VuiBox>

@@ -1,9 +1,10 @@
 import axios from "axios";
+import LocalStorageUtils from "utils/localStorageUtils";
 
 const axiosInstance = axios.create({
   baseURL: "https://work-team-manager.vercel.app/",
   headers: {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
+    Authorization: `Bearer ${LocalStorageUtils.getToken()}`,
   },
 });
 

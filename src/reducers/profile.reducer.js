@@ -23,7 +23,11 @@ export const profilesReducer = (state = initialState, action) => {
     case SET_PROFILE:
       return {
         ...state,
-        user: action.user,
+        user: action.payload.user,
+        active: true,
+        assignedTasks: action.payload.user.assignedTasks,
+        pendingTasks: action.payload.user.pendingTasks,
+        completedTasks: action.payload.user.completedTasks,
       };
     case SET_PROFILE_ERROR:
       return {

@@ -17,6 +17,8 @@ const initialState = {
   error: null,
   loading: false,
   logoutAt: null,
+  username: null,
+  password: null,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -32,6 +34,8 @@ const authReducer = (state = initialState, action) => {
         error: null,
         loading: false,
         logoutAt: action.payload.logoutAt,
+        username: action.payload.username,
+        password: action.payload.password,
       };
     case SET_LOGIN_FAIL:
       return {
@@ -44,12 +48,7 @@ const authReducer = (state = initialState, action) => {
         loading: false,
         logoutAt: null,
       };
-    case SET_USER_LOADED:
-      return {
-        ...state,
-        isAuthenticated: true,
-        user: action.user,
-      };
+
     case SET_TOKEN:
       return {
         ...state,
