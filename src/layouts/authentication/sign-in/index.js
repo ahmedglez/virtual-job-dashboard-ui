@@ -80,10 +80,7 @@ function SignIn() {
             username: email,
             password: password,
           };
-          dispatch({
-            type: "SET_LOGIN_SUCCESS",
-            payload: payload,
-          });
+          dispatch(registrerSuccess(payload));
           LocalStorageUtils.setToken(response.token);
           LocalStorageUtils.setRefreshToken(response.refreshToken);
           history.push("/admin/dashboard");
@@ -199,8 +196,8 @@ function SignIn() {
               component={Link}
               to="/authentication/sign-up"
               variant="button"
-              color="white"
               fontWeight="medium"
+              color="primary"
             >
               Regístrate
             </VuiTypography>

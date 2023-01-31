@@ -24,7 +24,7 @@ function Footer() {
   return (
     <VuiBox
       display="flex"
-      flexDirection={{ xs: "column", lg: "row" }}
+      flexDirection={{ xs: "column" }}
       justifyContent="space-between"
       direction="row"
       component="footer"
@@ -37,18 +37,24 @@ function Footer() {
           sx={{ textAlign: "center", fontWeight: "400 !important" }}
           color="white"
         >
-          @ 2023, Made with ❤️&nbsp;&nbsp;&nbsp; by{" "}
+          @ 2023, Made with ❤️ by{" "}
           <VuiTypography
             component="a"
             variant="button"
-            href="https://simmmple.com/"
-            sx={{ textAlign: "center", fontWeight: "500 !important" }}
+            href="https://github.com/ahmedglez"
+            sx={{ textAlign: "center", fontWeight: "300 !important" }}
             color="white"
             mr="2px"
           >
-            <VuiTypography component="span" color="white">
+            &nbsp;
+            <VuiTypography
+              component="span"
+              sx={{ textAlign: "center", fontWeight: "500 !important" }}
+              color="white"
+            >
               ahmedglez
             </VuiTypography>
+            &nbsp;
           </VuiTypography>
           for a better web
         </VuiTypography>

@@ -4,6 +4,7 @@ import {
   SET_USER_LOADED,
   SET_AUTH_ERROR,
   SET_TOKEN,
+  SET_REFRESH_TOKEN
 } from "../constants/types";
 
 const registrerSuccess = (payload) => ({
@@ -31,4 +32,9 @@ const setToken = (payload) => ({
   payload,
 });
 
-export { registrerSuccess, registrerFail, userLoaded, authError, setToken };
+const setRefreshToken = (payload) => ({
+  type: SET_REFRESH_TOKEN,
+  payload,
+});
+
+export { registrerSuccess, registrerFail, userLoaded, authError, setToken, setRefreshToken };

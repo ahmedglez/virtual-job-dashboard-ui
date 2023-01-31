@@ -84,7 +84,7 @@ function SignIn() {
           En caso de querer crear una cuenta nueva, puedes contactarnos a través de nuestro correo
           electrónico.
           <VuiTypography variant="body2" fontWeight="400" color="text" mb={1}>
-            <a href="mailto:ahmediglez@gmail.com">ahmediglez@gmail.com</a>
+            <a href="mailto:soporte@stixcp.com">soporte@stixcp.com</a>
           </VuiTypography>
         </VuiTypography>
       </VuiBox>

@@ -6,7 +6,7 @@ import {
   SET_ACTIVE,
 } from "../constants/types";
 
-const getProfile = (payload) => ({
+const setProfile = (payload) => ({
   type: SET_PROFILE,
   payload,
 });
@@ -32,4 +32,4 @@ const setActive = (payload) => ({
 
 
 
-export { getProfile, profileError, clearProfile, updateProfile };
+export { setProfile, profileError, clearProfile, updateProfile, setActive };

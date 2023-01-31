@@ -26,10 +26,57 @@ import WelcomeMark from "layouts/dashboard/components/WelcomeMark";
 import LineChart from "examples/Charts/LineCharts/LineChart";
 import { lineChartDataDashboard } from "layouts/dashboard/data/lineChartData";
 import { lineChartOptionsDashboard } from "layouts/dashboard/data/lineChartOptions";
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import { setProfile } from "actions/profile.actions";
+import { setToken, setRefreshToken } from "actions/auth.actions";
+// React
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+// Services
+import ProfileServices from "services/profile.services";
+import LocalStorageUtils from "utils/localStorageUtils";
 
 function Dashboard() {
   const { gradients } = colors;
   const { cardContent } = gradients;
+  const profileServices = ProfileServices();
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const selector = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    try {
+      let validToken = false;
+      const {logoutAt} = selector;
+      const token = LocalStorageUtils.getToken();
+      if (token && token !== null) {
+        validToken = new Date().getTime() < logoutAt;  
+      }
+      if (validToken) {
+        const getUserInfo = async () => {
+          setLoading(true);
+          const response = await profileServices.getPersonalInfo();
+          if (response) {
+            dispatch(setRefreshToken(response.data.refreshToken));
+            dispatch(setProfile(response.data));
+            setUser(response.data);
+          }
+          setLoading(false);
+        };
+        getUserInfo();
+      } else {
+        LocalStorageUtils.removeToken();
+        history.push("/login");
+      }
+    } catch (error) {
+      setError(error);
+    }
+    setLoading(false);
+  }, []);
 
   return (
     <DashboardLayout>

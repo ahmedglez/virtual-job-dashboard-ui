@@ -48,13 +48,25 @@ const authReducer = (state = initialState, action) => {
         loading: false,
         logoutAt: null,
       };
+    
+    case SET_USER_LOADED:
+      return {
+        ...state,
+        isAuthenticated: true,
+        user: action.user,
+        error: null,
+        loading: false,
+      };
+    
 
     case SET_TOKEN:
+      LocalStorageUtils.setToken(action.token);
       return {
         ...state,
         token: action.token,
       };
     case SET_REFRESH_TOKEN:
+      LocalStorageUtils.setRefreshToken(action.refreshToken);
       return {
         ...state,
         refreshToken: action.refreshToken,

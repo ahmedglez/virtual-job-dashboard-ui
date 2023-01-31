@@ -14,29 +14,41 @@ import ProfileSettings from "./components/ProfileSettings";
 import HashLinkObserver from "react-hash-link";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
+import { setProfile } from "actions/profile.actions";
+import { userLoaded } from "actions/auth.actions";
 // React
 import { useEffect, useState } from "react";
-// Services
-import ProfileServices from "services/profile.services";
-
+import { useHistory } from "react-router-dom";
 
 function Overview() {
-  const profileServices = ProfileServices();
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
 
+  const history = useHistory();
+  const selector = useSelector((state) => state.profile);
+
   useEffect(() => {
+    setLoading(true);
     const getUserInfo = async () => {
-      const response = await profileServices.getPersonalInfo();
-      if (response) {
-        dispatch({
-          type: "SET_USER",
-          payload: response.data,
-        });
-        setUser(response.data);
+      try {
+        const { user } = selector;
+        if (user !== undefined && user !== null) {
+          setUser(user);
+          dispatch(userLoaded(user));
+          dispatch(setProfile(user));
+        } else {
+          setLoading(false);
+          setError("User not found");
+          history.push("/login");
+        }
+      } catch (error) {
+        setError(error);
       }
     };
     getUserInfo();
+    setLoading(false);
   }, []);
 
   return (
@@ -66,7 +78,7 @@ function Overview() {
           </Grid>
 
           <Grid item xs={12} xl={12} xxl={12}>
-            {user !== undefined && user !== null ? (
+            {!loading && user !== null ? (
               <ProfileInfoCard
                 title="profile information"
                 info={{
@@ -100,7 +112,7 @@ function Overview() {
           >
             <HashLinkObserver />
             <div id="profileSettingsRouter"></div>
-            {user !== undefined && user !== null ? (
+            {!loading && user !== null ? (
               <ProfileSettings
                 user={{
                   ...user,

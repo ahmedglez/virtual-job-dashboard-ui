@@ -12,7 +12,7 @@ const LocalStorageUtils = {
   },
 
   getToken: () => {
-    return JSON.parse(localStorage.getItem("token"));
+    return localStorage.getItem("token");
   },
 
   getRefreshToken: () => {

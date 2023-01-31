@@ -11,8 +11,8 @@ import IconButton from "@mui/material/IconButton";
 
 
 // @mui icons
-import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
+import GitHubIcon from "@mui/icons-material/GitHub";
 
 // Vision UI Dashboard React components
 import VuiBox from "components/VuiBox";
@@ -253,7 +253,7 @@ function Configurator() {
             <VuiBox mr={1.5}>
               <VuiButton
                 component={Link}
-                href="https://twitter.com/intent/tweet?url=https://www.creative-tim.com/product/vision-ui-dashboard-react&text=Check%20Vision%20UI%20Dashboard%20made%20by%20@simmmple_web%20and%20@CreativeTim%20#webdesign%20#dashboard%20#react"
+                href="https://twitter.com/ahmed_glez"
                 target="_blank"
                 rel="noreferrer"
                 color="dark"
@@ -264,13 +264,13 @@ function Configurator() {
             </VuiBox>
             <VuiButton
               component={Link}
-              href="https://www.facebook.com/sharer/sharer.php?u=https://www.creative-tim.com/product/vision-ui-dashboard-react"
+              href="https://github.com/ahmedglez"
               target="_blank"
               rel="noreferrer"
               color="dark"
             >
-              <FacebookIcon />
-              &nbsp; Share
+              <GitHubIcon />
+              &nbsp; Visit
             </VuiButton>
           </VuiBox>
         </VuiBox>

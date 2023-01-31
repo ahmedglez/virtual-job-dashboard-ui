@@ -1,4 +1,4 @@
-import axiosInstance from "constants/axiosInstance";
+import {axiosInstance} from "constants/axiosInstance";
 import config from "config/global.config";
 import jwtUtils from "utils/jwtUtils";
 import LocalStorageUtils from "utils/localStorageUtils";
