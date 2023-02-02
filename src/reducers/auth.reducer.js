@@ -23,9 +23,9 @@ const initialState = {
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_LOGIN_SUCCESS:
-      LocalStorageUtils.setToken(action.token);
-      LocalStorageUtils.setRefreshToken(action.refreshToken);
+    case SET_LOGIN_SUCCESS:      
+      LocalStorageUtils.setToken(action.payload.token);
+      LocalStorageUtils.setRefreshToken(action.payload.refreshToken);
       return {
         ...state,
         isAuthenticated: true,
@@ -44,7 +44,7 @@ const authReducer = (state = initialState, action) => {
         user: null,
         token: null,
         refreshToken: null,
-        error: action.error,
+        error: action.payload.error,
         loading: false,
         logoutAt: null,
       };
@@ -53,23 +53,23 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         isAuthenticated: true,
-        user: action.user,
+        user: action.payload.user,
         error: null,
         loading: false,
       };
     
 
     case SET_TOKEN:
-      LocalStorageUtils.setToken(action.token);
+      LocalStorageUtils.setToken(action.payload.token);
       return {
         ...state,
-        token: action.token,
+        token: action.payload.token,
       };
     case SET_REFRESH_TOKEN:
-      LocalStorageUtils.setRefreshToken(action.refreshToken);
+      LocalStorageUtils.setRefreshToken(action.payload.refreshToken);
       return {
         ...state,
-        refreshToken: action.refreshToken,
+        refreshToken: action.payload.refreshToken,
       };
     case SET_LOGOUT_AT:
       return {
@@ -82,7 +82,7 @@ const authReducer = (state = initialState, action) => {
     case SET_IS_AUTHENTICATED:
       return {
         ...state,
-        isAuthenticated: action.isAuthenticated,
+        isAuthenticated: action.payload.isAuthenticated,
       };
     default:
       return state;

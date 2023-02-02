@@ -81,8 +81,6 @@ function SignIn() {
             password: password,
           };
           dispatch(registrerSuccess(payload));
-          LocalStorageUtils.setToken(response.token);
-          LocalStorageUtils.setRefreshToken(response.refreshToken);
           history.push("/admin/dashboard");
         } else {
           dispatch(registrerFail());

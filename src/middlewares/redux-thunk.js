@@ -1,8 +1,5 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
-import globalConfig from "config/global.config";
-
-const API_URL = globalConfig.development.api_url;
 
 const jwtMiddleware =
   ({ getState }) =>
