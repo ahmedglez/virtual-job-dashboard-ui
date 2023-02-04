@@ -153,7 +153,7 @@ function Configurator() {
             <RouterLink
               to={{
                 pathname: "/profile",
-                hash: "profileSettingsRouter",
+                hash: "profile-settings",
               }}
               onClick={handleCloseConfigurator}
             >

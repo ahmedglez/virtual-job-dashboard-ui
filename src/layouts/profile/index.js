@@ -49,7 +49,7 @@ function Overview() {
     };
     getUserInfo();
     setLoading(false);
-  }, []);
+  }, [selector]);
 
   return (
     <DashboardLayout>
@@ -78,6 +78,7 @@ function Overview() {
           </Grid>
 
           <Grid item xs={12} xl={12} xxl={12}>
+            <div id="profile-information"></div>
             {!loading && user !== null ? (
               <ProfileInfoCard
                 title="profile information"
@@ -89,6 +90,7 @@ function Overview() {
                   email: user.email,
                   ci: user.ci,
                   address: user.address,
+                  lastLogin: new Date(user.lastConnection).toLocaleString(),
                 }}
               />
             ) : (
@@ -111,7 +113,7 @@ function Overview() {
             }}
           >
             <HashLinkObserver />
-            <div id="profileSettingsRouter"></div>
+            <div id="profile-settings"></div>
             {!loading && user !== null ? (
               <ProfileSettings
                 user={{

@@ -18,16 +18,20 @@ const initialState = {
   error: null,
 };
 
+
+
 export const profilesReducer = (state = initialState, action) => {
+  const data = action.payload;
+
   switch (action.type) {
     case SET_PROFILE:
       return {
         ...state,
-        user: action.payload.user,
+        user: data,
         active: true,
-        assignedTasks: action.payload.user.assignedTasks,
-        pendingTasks: action.payload.user.pendingTasks,
-        completedTasks: action.payload.user.completedTasks,
+        assignedTasks: data.assignedTasks,
+        pendingTasks: data.pendingTasks,
+        completedTasks: data.completedTasks,
       };
     case SET_PROFILE_ERROR:
       return {

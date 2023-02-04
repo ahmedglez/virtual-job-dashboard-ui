@@ -44,28 +44,17 @@ const ProfileSettings = (props) => {
           direction="column"
           xs={12}
           md={6}
+          mt={1}
           xl={6}
           xxl={6}
         >
-          <EditFields label="Nickname" value={user.nickname} />
-          <EditFields label="Email" value={user.email} />
-          <EditFields label="Full Name" value={user.fullname} />
-          <EditFields label="Phone" value={user.phone} />
-        </Grid>
-        <Grid
-          container
-          xs={12}
-          md={6}
-          xl={6}
-          xxl={6}
-          spacing={3}
-          display="flex"
-          justifyContent="center"
-          direction="column"
-        >
-          <EditFields label="Mobile" value={user.mobile} />
-          <EditFields label="Address" value={user.address} />
-          
+          <EditFields label="ci" value={user.ci} />
+          <EditFields label="nickname" value={user.nickname} />
+          <EditFields label="email" value={user.email} />
+          <EditFields label="fullname" value={user.fullname} />
+          <EditFields label="phone" value={user.phone} />
+          <EditFields label="mobile" value={user.mobile} />
+          <EditFields label="address" value={user.address} />
         </Grid>
       </Grid>
     </VuiBox>

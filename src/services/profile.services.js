@@ -15,8 +15,18 @@ const ProfileServices = () => {
     }
   };
 
+  const updatePersonalInfo = async (data) => {
+    try {
+      const response = await axiosInstance.put("me", data);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     getPersonalInfo,
+    updatePersonalInfo,
   };
 };
 

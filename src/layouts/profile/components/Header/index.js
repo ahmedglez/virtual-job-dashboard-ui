@@ -19,8 +19,10 @@ import { IoBuild } from "react-icons/io5";
 // Vision UI Dashboard React example components
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 function Header(props) {
+  const history = useHistory();
   const { user } = props;
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
@@ -138,9 +140,27 @@ function Header(props) {
                 onChange={handleSetTabValue}
                 sx={{ background: "transparent", display: "flex", justifyContent: "flex-end" }}
               >
-                <Tab label="OVERVIEW" icon={<IoCube color="white" size="16px" />} />
-                <Tab label="TEAMS" icon={<IoDocument color="white" size="16px" />} />
-                <Tab label="PROJECTS" icon={<IoBuild color="white" size="16px" />} />
+                <Tab
+                  onClick={() => {
+                    history.push("/profile#profile-information");
+                  }}
+                  label="Profile Information"
+                  icon={<IoCube color="white" size="16px" />}
+                />
+                <Tab
+                  onClick={() => {
+                    history.push("/profile#profile-settings");
+                  }}
+                  label="Profile Settings"
+                  icon={<IoBuild color="white" size="16px" />}
+                />
+                <Tab
+                  onClick={() => {
+                    history.push("/profile#profile-overview");
+                  }}
+                  label="Overview"
+                  icon={<IoDocument color="white" size="16px" />}
+                />
               </Tabs>
             </AppBar>
           </Grid>
