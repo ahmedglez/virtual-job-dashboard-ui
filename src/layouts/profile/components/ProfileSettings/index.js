@@ -4,18 +4,36 @@ import VuiTypography from "components/VuiTypography/index";
 import EditFields from "./EditFields";
 import HashLinkObserver from "react-hash-link";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 
 const ProfileSettings = (props) => {
   const { user } = props;
   const selector = useSelector((state) => state.auth);
-  const [password, setPassword] = useState(selector.password);
+  const [inputValues, setInputValues] = useState({
+    ci: user.ci,
+    nickname: user.nickname,
+    fullname: user.fullname,
+    email: user.email,
+    password: selector.password,
+    phone: user.phone,
+    mobile: user.mobile,
+    address: user.address,
+  });
+  const labels = ["ci", "nickname", "fullname", "email", "password", "phone", "mobile", "address"];
+
   const [confirmPassword, setConfirmPassword] = useState("");
   const [changingPassword, setChangingPassword] = useState(false);
-  const [username, setUsername] = useState("");
+  const handleChangeState = (value) => {
+    setInputValues({
+      ...inputValues,
+      value,
+    });
+  };
 
   return (
-    <VuiBox mb={3} xs={12} xl={12}>
+    <VuiBox mb={3} sx={{
+      width:"100%"
+    }}>
       <Grid container display="flex" spacing={3} justifyContent="center" marginBottom={3}>
         <HashLinkObserver />
         <VuiTypography variant="h5" fontWeight="bold" color="white">
@@ -28,7 +46,6 @@ const ProfileSettings = (props) => {
         display="flex"
         alignItems="center"
         justifyContent="center"
-        marginTop={3}
         direction={{
           xs: "column",
           sm: "column",
@@ -37,7 +54,8 @@ const ProfileSettings = (props) => {
         }}
       >
         <Grid
-          container
+          item
+          fullWidth
           spacing={3}
           display="flex"
           justifyContent="center"
@@ -45,8 +63,8 @@ const ProfileSettings = (props) => {
           xs={12}
           md={6}
           mt={1}
-          xl={6}
-          xxl={6}
+          xl={12}
+          xxl={12}
         >
           <EditFields label="ci" value={user.ci} />
           <EditFields label="nickname" value={user.nickname} />

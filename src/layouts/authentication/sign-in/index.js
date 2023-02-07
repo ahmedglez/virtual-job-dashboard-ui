@@ -104,6 +104,7 @@ function SignIn() {
       color="white"
       description="Inicia sesión para continuar"
       image={bgSignIn}
+      children={null}
     >
       <VuiBox component="form" role="form">
         <VuiBox mb={2}>
@@ -156,7 +157,8 @@ function SignIn() {
         <VuiBox mt={4} mb={1}>
           {error && (
             <VuiTypography variant="button" color="error" fontWeight="medium">
-              {message}
+              Error al iniciar sesión. {" "} 
+              Por favor, intente nuevamente.
             </VuiTypography>
           )}
           {loading === true ? (

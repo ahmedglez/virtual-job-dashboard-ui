@@ -23,6 +23,7 @@ import VuiTypography from "components/VuiTypography";
 function Footer() {
   return (
     <VuiBox
+      
       display="flex"
       flexDirection={{ xs: "column" }}
       justifyContent="space-between"
@@ -31,7 +32,7 @@ function Footer() {
       py={2}
       pb={0}
     >
-      <VuiBox item xs={12} sx={{ textAlign: "center" }}>
+      <VuiBox xs={12} sx={{ textAlign: "center" }}>
         <VuiTypography
           variant="button"
           sx={{ textAlign: "center", fontWeight: "400 !important" }}

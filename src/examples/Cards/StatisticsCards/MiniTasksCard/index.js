@@ -30,9 +30,11 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
 import colors from "assets/theme/base/colors";
+import { useState } from "react";
 
 function MiniTasksCard({ bgColor, title, status, priority, direction }) {
   const { info } = colors;
+  const [gridDirection, setGridDirection] = useState(direction)
 
   const icon = { color: "info", component: <AssignmentIcon size="22px" color="white" /> };
 
@@ -41,7 +43,7 @@ function MiniTasksCard({ bgColor, title, status, priority, direction }) {
       <VuiBox>
         <VuiBox>
           <Grid container alignItems="center">
-            {direction === "left" ? (
+            {gridDirection === "left" ? (
               <Grid item>
                 <VuiBox
                   bgColor={info}
@@ -76,7 +78,7 @@ function MiniTasksCard({ bgColor, title, status, priority, direction }) {
                 </VuiTypography>
               </VuiBox>
             </Grid>
-            {direction === "right" ? (
+            {gridDirection === "right" ? (
               <Grid item xs={4}>
                 <VuiBox
                   bgColor="#0075FF"

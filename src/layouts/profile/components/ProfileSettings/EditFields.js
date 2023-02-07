@@ -1,19 +1,54 @@
 import EditIcon from "@mui/icons-material/Edit";
-import SaveIcon from "@mui/icons-material/Save";
-import CancelIcon from "@mui/icons-material/Cancel";
-import { Grid, TextField } from "@mui/material";
-import VuiBox from "components/VuiBox";
-import VuiButton from "components/VuiButton";
-import VuiTypography from "components/VuiTypography/index";
+import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import HourglassFullIcon from "@mui/icons-material/HourglassFull";
+import HourglassTopIcon from "@mui/icons-material/HourglassTop";
+import SaveIcon from "@mui/icons-material/Save";
+import { Grid, TextField, Button, CircularProgress } from "@mui/material";
+import { makeStyles } from "@mui/styles";
+import { green } from "@mui/material/colors";
 import { setProfile } from "actions/profile.actions";
+import VuiButton from "components/VuiButton";
+import { useState, useRef, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ProfileServices from "services/profile.services";
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    alignItems: "center",
+  },
+  wrapper: {
+    margin: theme.spacing(1),
+    position: "relative",
+  },
+  buttonSuccess: {
+    backgroundColor: green[500],
+    "&:hover": {
+      backgroundColor: green[700],
+    },
+  },
+  fabProgress: {
+    color: green[500],
+    position: "absolute",
+    top: -6,
+    left: -6,
+    zIndex: 1,
+  },
+  buttonProgress: {
+    color: green[500],
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    marginTop: -12,
+    marginLeft: -12,
+  },
+}));
+
 const EditFields = (props) => {
+  const classes = useStyles();  
   const service = ProfileServices();
-  const { label, value, setChangingPassword } = props;
+  const { label, value, setInputValues } = props;
   const [inputValue, setInputValue] = useState(value);
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -21,33 +56,40 @@ const EditFields = (props) => {
 
   const dispatch = useDispatch();
   const profileSelector = useSelector((state) => state.profile);
-  const authSelector = useSelector((state) => state.auth);
 
-  const handleSave = async (value) => {
+  useEffect(() => {
+    return () => {
+      clearTimeout(timer.current);
+    };
+  }, []);
+
+  const handleChange = (e) => {
+    setInputValue(e.target.value);
+  };
+  const handleSave = (value) => {
     setLoading(true);
-    try {
-      const payload = {
-        ...profileSelector.user,
-        [label]: inputValue,
-        password: authSelector.password,
-      };
-      const response = await service.updatePersonalInfo(payload);
-      if (response.status === 200) {
-        dispatch(setProfile({ ...profileSelector, [label]: value }));
-        setEditMode(false);
+    async function handle() {
+      try {
+        const payload = {
+          ...profileSelector.user,
+          [label]: inputValue,
+        };
+        const response = await service.updatePersonalInfo(payload);
+        if (response.status === 200) {
+          dispatch(setProfile(payload));
+          setEditMode(false);
+          setLoading(false);
+        }
+      } catch (error) {
+        setError(error);
         setLoading(false);
       }
-    } catch (error) {
-      setError(error);
-      setLoading(false);
     }
+    handle();
   };
 
   return (
-    <Grid
-      container
-      spacing={3}      
-    >
+    <Grid container spacing={3}>
       <Grid
         item
         xs={12}
@@ -63,6 +105,7 @@ const EditFields = (props) => {
         <Grid item display="flex" alignItems="center" marginRight={1}>
           <TextField
             key={0}
+            fullWidth
             disabled={!editMode}
             id="outlined-basic"
             variant="outlined"
@@ -77,47 +120,41 @@ const EditFields = (props) => {
               },
             }}
             value={inputValue}
-            onChange={(e) => {
-              setInputValue(e.target.value);
-            }}
+            onChange={handleChange}
           />
         </Grid>
         <Grid display="flex" alignItems="center" direction="row">
           {loading ? (
-            <Grid display="flex" alignItems="center" direction="row">
-              <VuiButton
-                variant="contained"
-                color="primary"
-                size="small"
-                startIcon={<HourglassEmptyIcon />}
-              ></VuiButton>
-            </Grid>
+            <VuiButton
+              fullWidth
+              variant="contained"
+              color="primary"
+              size="small"
+              startIcon={<CircularProgress size={25} className={classes.buttonProgress} />}
+              disabled={loading}
+            ></VuiButton>
           ) : (
             <>
-              {!editMode ? (
-                <Grid display="flex" alignItems="center" direction="row">
-                  <VuiButton
-                    onClick={() => {
-                      setEditMode(true);
-                    }}
-                    variant="contained"
-                    color="primary"
-                    size="small"
-                    startIcon={<EditIcon />}
-                  ></VuiButton>
-                </Grid>
+              {!editMode && loading === false ? (
+                <VuiButton
+                  onClick={() => {
+                    setEditMode(true);
+                  }}
+                  variant="contained"
+                  color="primary"
+                  size="small"
+                  startIcon={<EditIcon />}
+                ></VuiButton>
               ) : (
-                <Grid display="flex" alignItems="center" direction="row">
-                  <VuiButton
-                    onClick={() => {
-                      handleSave(false);
-                    }}
-                    variant="contained"
-                    color="primary"
-                    size="small"
-                    startIcon={<SaveIcon />}
-                  ></VuiButton>
-                </Grid>
+                <VuiButton
+                  onClick={() => {
+                    handleSave(false);
+                  }}
+                  variant="contained"
+                  color="primary"
+                  size="small"
+                  startIcon={<SaveIcon />}
+                ></VuiButton>
               )}
             </>
           )}

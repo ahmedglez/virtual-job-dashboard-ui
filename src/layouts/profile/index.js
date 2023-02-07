@@ -24,10 +24,10 @@ function Overview() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [user, setUser] = useState(null);
+  const selector = useSelector((state) => state.profile);
+  const [user, setUser] = useState(selector.user);
 
   const history = useHistory();
-  const selector = useSelector((state) => state.profile);
 
   useEffect(() => {
     setLoading(true);
@@ -35,7 +35,6 @@ function Overview() {
       try {
         const { user } = selector;
         if (user !== undefined && user !== null) {
-          setUser(user);
           dispatch(userLoaded(user));
           dispatch(setProfile(user));
         } else {
@@ -49,7 +48,13 @@ function Overview() {
     };
     getUserInfo();
     setLoading(false);
-  }, [selector]);
+  }, []);
+
+
+  /* rendering user every time than set profile action is dispatched */
+  useEffect(() => {
+    setUser(selector.user);
+  },[selector.user])
 
   return (
     <DashboardLayout>

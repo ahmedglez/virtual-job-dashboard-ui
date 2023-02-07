@@ -89,6 +89,8 @@ function Dashboard() {
                 title={{ text: "Ir a casa de cliente #1", fontWeight: "regular" }}
                 status={"pendiente"}
                 priority={{ color: "success", text: "low" }}
+                count={null}
+                icon={null}
               />
             </Grid>
             <Grid item xs={12} md={6} xl={4}>

@@ -222,9 +222,9 @@ CoverLayout.propTypes = {
   header: PropTypes.node,
   title: PropTypes.string,
   description: PropTypes.string,
-  image: PropTypes.string.isRequired,
+  image: PropTypes.string,
   top: PropTypes.number,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
 };
 
 export default CoverLayout;
