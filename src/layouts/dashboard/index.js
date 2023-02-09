@@ -1,6 +1,7 @@
 // @mui material components
 import { Card } from "@mui/material";
 import Grid from "@mui/material/Grid";
+import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 
 // Vision UI Dashboard React components
 import VuiBox from "components/VuiBox";
@@ -19,6 +20,7 @@ import colors from "assets/theme/base/colors";
 import OrderOverview from "layouts/dashboard/components/OrderOverview";
 import Projects from "layouts/dashboard/components/Projects";
 import WelcomeMark from "layouts/dashboard/components/WelcomeMark";
+import TaskSummary from "layouts/dashboard/components/TaskSummary";
 
 // React icons
 
@@ -47,14 +49,15 @@ function Dashboard() {
   const dispatch = useDispatch();
   const history = useHistory();
   const selector = useSelector((state) => state.auth);
+  const [assignedTasks, setAssignedTask] = useState([]);
 
   useEffect(() => {
     try {
       let validToken = false;
-      const {logoutAt} = selector;
+      const { logoutAt } = selector;
       const token = LocalStorageUtils.getToken();
       if (token && token !== null) {
-        validToken = new Date().getTime() < logoutAt;  
+        validToken = new Date().getTime() < logoutAt;
       }
       if (validToken) {
         const getUserInfo = async () => {
@@ -64,6 +67,7 @@ function Dashboard() {
             dispatch(setRefreshToken(response.data.refreshToken));
             dispatch(setProfile(response.data));
             setUser(response.data);
+            setAssignedTask(response.data.assignedTasks);
           }
           setLoading(false);
         };
@@ -82,36 +86,42 @@ function Dashboard() {
     <DashboardLayout>
       <DashboardNavbar />
       <VuiBox py={3}>
-        <VuiBox mb={3}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6} xl={4}>
-              <MiniStatisticsCard
-                title={{ text: "Ir a casa de cliente #1", fontWeight: "regular" }}
-                status={"pendiente"}
-                priority={{ color: "success", text: "low" }}
-                count={null}
-                icon={null}
-              />
-            </Grid>
-            <Grid item xs={12} md={6} xl={4}>
-              <MiniStatisticsCard
-                title={{ text: "Comprobar camaras en casa de Ivan Chef" }}
-                status={"activo"}
-                priority={{
-                  color: "info",
-                  text: "medium",
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} md={6} xl={4}>
-              <MiniStatisticsCard
-                title={{ text: "Arreglar cancelas en Varadero" }}
-                status={"terminada"}
-                priority={{ color: "warning", text: "high" }}
-              />
+        {assignedTasks && assignedTasks.length > 0 ? (
+          <TaskSummary />
+        ) : (
+          <Grid container mb={3}>
+            {/* no task yet message */}
+            <Grid item xs={12} lg={12} xl={12}>
+              <Card>
+                <VuiBox
+                  sx={{
+                    height: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <VuiBox textAlign="center">
+                    <VuiBox mb={3}>
+                      <SentimentVeryDissatisfiedIcon
+                        sx={{
+                          color: "primary",
+                          fontSize: "100px",
+                        }}
+                      />
+                    </VuiBox>
+                    <VuiTypography variant="h4" color="text" fontWeight="bold">
+                      No task yet
+                    </VuiTypography>
+                    <VuiTypography variant="body2" color="text" fontWeight="regular">
+                      You have no task assigned to you yet
+                    </VuiTypography>
+                  </VuiBox>
+                </VuiBox>
+              </Card>
             </Grid>
           </Grid>
-        </VuiBox>
+        )}
         <VuiBox mb={3}>
           <Grid container spacing="18px">
             <Grid item xs={12} lg={12} xl={12}>

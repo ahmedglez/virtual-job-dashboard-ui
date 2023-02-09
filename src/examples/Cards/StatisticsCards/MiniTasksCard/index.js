@@ -24,7 +24,7 @@ import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
 import AssignmentIcon from "@mui/icons-material/Assignment";
-
+import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 
 // Vision UI Dashboard React components
 import VuiBox from "components/VuiBox";
@@ -34,9 +34,12 @@ import { useState } from "react";
 
 function MiniTasksCard({ bgColor, title, status, priority, direction }) {
   const { info } = colors;
-  const [gridDirection, setGridDirection] = useState(direction)
+  const [gridDirection, setGridDirection] = useState(direction);
 
-  const icon = { color: "info", component: <AssignmentIcon size="22px" color="white" /> };
+  const icon = {
+    color: "info",
+    component: status === "done" ? <AssignmentTurnedInIcon /> : <AssignmentIcon />,
+  };
 
   return (
     <Card sx={{ padding: "17px" }}>
@@ -70,11 +73,25 @@ function MiniTasksCard({ bgColor, title, status, priority, direction }) {
                 >
                   {title.text}
                 </VuiTypography>
-                <VuiTypography variant="subtitle1" fontWeight="bold" color="white">
+                <VuiTypography
+                  variant="subtitle1"
+                  fontWeight="bold"
+                  color={
+                    status === "done" ? "success" : status === "in progress" ? "warning" : "error"
+                  }
+                >
                   {status}
                 </VuiTypography>
-                <VuiTypography variant="button" color={priority.color} fontWeight="bold">
-                  {priority.text}
+                <VuiTypography variant="subtitle2" color="text" opacity={0.7}>
+                  priority: &nbsp;
+                  <VuiTypography
+                    variant="subtitle2"
+                    color={priority.color}
+                    fontWeight="bold"
+                    display="inline"
+                  >
+                    {priority.text}
+                  </VuiTypography>
                 </VuiTypography>
               </VuiBox>
             </Grid>
@@ -105,7 +122,7 @@ function MiniTasksCard({ bgColor, title, status, priority, direction }) {
   );
 }
 
-// Setting default values for MiniTasksCard the props of 
+// Setting default values for MiniTasksCard the props of
 MiniTasksCard.defaultProps = {
   bgColor: "white",
   title: {
