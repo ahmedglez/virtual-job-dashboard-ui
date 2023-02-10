@@ -20,7 +20,7 @@ import { axiosInstance } from "constants/axiosInstance";
 const TaskSummary = () => {
   const selector = useSelector((state) => state.profile);
   const [assignedTasks, setAssignedTasks] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const history = useHistory();
 
@@ -69,7 +69,6 @@ const TaskSummary = () => {
               </Grid>
             );
           })}
-          <h1>CARGANDO</h1>
         </Grid>
       ) : (
         <Grid container spacing={3}>
@@ -80,7 +79,7 @@ const TaskSummary = () => {
                   text: task.title.length > 30 ? `${task.title.slice(0, 30)}...` : task.title,
                   color: "text.primary",
                   fontWeight: "bold",
-                  fontSize: "h6.fontSize",
+                  fontSize: "h6.fontSize"
                 }}
                 status={task.status}
                 priority={{
@@ -93,6 +92,8 @@ const TaskSummary = () => {
                       : "success",
                 }}
                 icon={task.icon}
+                startDateTime={task.createdAt}
+                endDateTime={task.expirationDate}
                 color={cardContent.blue}
                 onClick={() => history.push(`/tasks/${task._id}`)}
                 sx={{
@@ -117,13 +118,12 @@ const TaskSummary = () => {
           <Card
             sx={{
               borderRadius: "12px",
-              backgroundColor: "#5be5f5",
-                          boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.05)",
+              backgroundColor: "primary.main",
+              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.05)",
               transition: "all 0.3s ease",
               "&:hover": {
-                  filter: "brightness(1.2)",
-                  cursor: "pointer",
-                  
+                filter: "brightness(1.2)",
+                cursor: "pointer",
               },
             }}
           >

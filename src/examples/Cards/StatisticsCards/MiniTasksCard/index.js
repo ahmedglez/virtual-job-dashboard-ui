@@ -32,7 +32,15 @@ import VuiTypography from "components/VuiTypography";
 import colors from "assets/theme/base/colors";
 import { useState } from "react";
 
-function MiniTasksCard({ bgColor, title, status, priority, direction }) {
+function MiniTasksCard({
+  bgColor,
+  title,
+  status,
+  priority,
+  direction,
+  startDateTime,
+  endDateTime,
+}) {
   const { info } = colors;
   const [gridDirection, setGridDirection] = useState(direction);
 
@@ -73,14 +81,19 @@ function MiniTasksCard({ bgColor, title, status, priority, direction }) {
                 >
                   {title.text}
                 </VuiTypography>
-                <VuiTypography
-                  variant="subtitle1"
-                  fontWeight="bold"
-                  color={
-                    status === "done" ? "success" : status === "in progress" ? "warning" : "error"
-                  }
-                >
-                  {status}
+                <VuiTypography color="text" variant="subtitle2" fontWeight="bold" opacity={0.7}>
+                  status: &nbsp;
+                  <VuiTypography
+                    variant="subtitle2"
+                    color={
+                      status === "done" ? "success" : status === "in progress" ? "warning" : "error"
+                    }
+                    fontWeight="bold"
+                    display="inline"
+                    opacity={0.7}
+                  >
+                    {status}
+                  </VuiTypography>
                 </VuiTypography>
                 <VuiTypography variant="subtitle2" color="text" opacity={0.7}>
                   priority: &nbsp;
@@ -91,6 +104,30 @@ function MiniTasksCard({ bgColor, title, status, priority, direction }) {
                     display="inline"
                   >
                     {priority.text}
+                  </VuiTypography>
+                </VuiTypography>
+                <VuiTypography variant="subtitle2" color="text" opacity={0.7}>
+                  start date: &nbsp;
+                  <VuiTypography
+                    variant="subtitle2"
+                    color={"text"}
+                    opacity={1.5}
+                    fontWeight="bold"
+                    display="inline"
+                  >
+                    {new Date(startDateTime).toLocaleDateString()}
+                  </VuiTypography>
+                </VuiTypography>
+                <VuiTypography variant="subtitle2" color="text" opacity={0.7}>
+                  end date: &nbsp;
+                  <VuiTypography
+                    variant="subtitle2"
+                    color={"text"}
+                    opacity={1.5}
+                    fontWeight="bold"
+                    display="inline"
+                  >
+                    {new Date(endDateTime).toLocaleDateString()}
                   </VuiTypography>
                 </VuiTypography>
               </VuiBox>
