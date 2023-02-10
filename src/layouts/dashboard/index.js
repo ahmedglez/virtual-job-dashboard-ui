@@ -114,7 +114,7 @@ function Dashboard() {
                       No task yet
                     </VuiTypography>
                     <VuiTypography variant="body2" color="text" fontWeight="regular">
-                      You have no task assigned to you yet
+                      You have no task assigned to you
                     </VuiTypography>
                   </VuiBox>
                 </VuiBox>
