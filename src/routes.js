@@ -77,7 +77,6 @@ const routes = [
     noCollapse: true,
   },
   {
-    /* log out */
     type: "collapse",
     name: "Log Out",
     key: "log-out",

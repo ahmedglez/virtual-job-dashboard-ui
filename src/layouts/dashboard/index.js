@@ -12,6 +12,7 @@ import MiniStatisticsCard from "examples/Cards/StatisticsCards/MiniTasksCard";
 import Footer from "examples/Footer";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 // Vision UI Dashboard React base styles
 import colors from "assets/theme/base/colors";
@@ -21,8 +22,7 @@ import OrderOverview from "layouts/dashboard/components/OrderOverview";
 import Projects from "layouts/dashboard/components/Projects";
 import WelcomeMark from "layouts/dashboard/components/WelcomeMark";
 import TaskSummary from "layouts/dashboard/components/TaskSummary";
-
-// React icons
+import TaskStatisticCard from "layouts/dashboard/components/TaskStatisticCard";
 
 // Data
 import LineChart from "examples/Charts/LineCharts/LineChart";
@@ -32,12 +32,14 @@ import { lineChartOptionsDashboard } from "layouts/dashboard/data/lineChartOptio
 import { useDispatch, useSelector } from "react-redux";
 import { setProfile } from "actions/profile.actions";
 import { setToken, setRefreshToken } from "actions/auth.actions";
+import { setTasks } from "actions/admin.actions";
 // React
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 // Services
 import ProfileServices from "services/profile.services";
 import LocalStorageUtils from "utils/localStorageUtils";
+import { axiosInstance } from "constants/axiosInstance";
 
 function Dashboard() {
   const { gradients } = colors;
@@ -50,6 +52,7 @@ function Dashboard() {
   const history = useHistory();
   const selector = useSelector((state) => state.auth);
   const [assignedTasks, setAssignedTask] = useState([]);
+  const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
     try {
@@ -68,6 +71,11 @@ function Dashboard() {
             dispatch(setProfile(response.data));
             setUser(response.data);
             setAssignedTask(response.data.assignedTasks);
+            if (response.data.roles.includes("admin")) {
+              const allTasks = await axiosInstance.get("tasks");
+              setTasks(allTasks.data.data);
+              dispatch(setTasks(allTasks.data.data));
+            }
           }
           setLoading(false);
         };
@@ -136,22 +144,22 @@ function Dashboard() {
                   <Card>
                     <VuiBox sx={{ height: "100%" }}>
                       <VuiTypography variant="lg" color="white" fontWeight="bold" mb="5px">
-                        Sales Overview
+                        Reportes de Tareas
                       </VuiTypography>
                       <VuiBox display="flex" alignItems="center" mb="40px">
                         <VuiTypography variant="button" color="success" fontWeight="bold">
-                          +5% more{" "}
-                          <VuiTypography variant="button" color="text" fontWeight="regular">
-                            in 2021
-                          </VuiTypography>
+                          ultimo mes
                         </VuiTypography>
                       </VuiBox>
-                      <VuiBox sx={{ height: "310px" }}>
-                        <LineChart
-                          lineChartData={lineChartDataDashboard}
-                          lineChartOptions={lineChartOptionsDashboard}
-                        />
-                      </VuiBox>
+                      {user !== null && user !== undefined && (
+                        <VuiBox >
+                          <Grid container spacing={3}>
+                            <TaskStatisticCard tasks={tasks} status={"done"} />
+                            <TaskStatisticCard tasks={tasks} status={"in progress"} />
+                            <TaskStatisticCard tasks={tasks} status={"pending"} />
+                          </Grid>
+                        </VuiBox>
+                      )}
                     </VuiBox>
                   </Card>
                 </Grid>

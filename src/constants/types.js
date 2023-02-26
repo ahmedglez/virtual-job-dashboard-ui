@@ -18,3 +18,7 @@ export const SET_ACTIVE = "SET_ACTIVE";
 export const SET_ASSIGNED_TASK = "SET_ASSIGNED_TASK";
 export const SET_COMPLETED_TASK = "SET_COMPLETED_TASK";
 export const SET_PENDING_TASK = "SET_PENDING_TASK";
+
+
+/* ADMIN TYPES */
+export const SET_TASKS = "SET_TASKS"

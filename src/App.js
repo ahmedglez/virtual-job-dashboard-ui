@@ -28,6 +28,7 @@ import routes from "routes";
 // Vision UI Dashboard React contexts
 import { setMiniSidenav, useVisionUIController } from "context";
 
+
 export default function App() {
   const [controller, dispatch] = useVisionUIController();
   const { miniSidenav, direction, layout, sidenavColor, openConfigurator } = controller;
