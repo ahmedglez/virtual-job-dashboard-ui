@@ -1,7 +1,8 @@
-import { SET_TASKS } from "constants/types";
+import { SET_TASKS, SET_USERS } from "constants/types";
 
 const initialState = {
   tasks: [],
+  users: [],
   loading: false,
   error: null,
 };
@@ -14,6 +15,11 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         tasks: data,
+      };
+    case SET_USERS:
+      return {
+        ...state,
+        users: data,
       };
     default:
       return state;

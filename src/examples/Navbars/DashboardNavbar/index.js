@@ -175,7 +175,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                       color: light ? white.main : dark.main,
                     })}
                   >
-                    account_circle
+                    login
                   </Icon>
                   <VuiTypography
                     variant="button"

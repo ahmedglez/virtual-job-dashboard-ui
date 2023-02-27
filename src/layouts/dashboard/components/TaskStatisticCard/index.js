@@ -10,7 +10,6 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import {
   getFilteredTasks,
   getFilteredTasksByMonth,
-  getFilteredTasksByStatus,
 } from "./filterFuntions";
 
 const TaskStatisticCard = (props) => {

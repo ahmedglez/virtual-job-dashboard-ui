@@ -32,7 +32,7 @@ import { lineChartOptionsDashboard } from "layouts/dashboard/data/lineChartOptio
 import { useDispatch, useSelector } from "react-redux";
 import { setProfile } from "actions/profile.actions";
 import { setToken, setRefreshToken } from "actions/auth.actions";
-import { setTasks } from "actions/admin.actions";
+import { setTasks, setUsers } from "actions/admin.actions";
 // React
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -74,7 +74,7 @@ function Dashboard() {
             if (response.data.roles.includes("admin")) {
               const allTasks = await axiosInstance.get("tasks");
               setTasks(allTasks.data.data);
-              dispatch(setTasks(allTasks.data.data));
+              dispatch(setTasks(allTasks.data.data));              
             }
           }
           setLoading(false);
@@ -148,11 +148,11 @@ function Dashboard() {
                       </VuiTypography>
                       <VuiBox display="flex" alignItems="center" mb="40px">
                         <VuiTypography variant="button" color="success" fontWeight="bold">
-                          ultimo mes
+                          último mes
                         </VuiTypography>
                       </VuiBox>
                       {user !== null && user !== undefined && (
-                        <VuiBox >
+                        <VuiBox>
                           <Grid container spacing={3}>
                             <TaskStatisticCard tasks={tasks} status={"done"} />
                             <TaskStatisticCard tasks={tasks} status={"in progress"} />
@@ -165,20 +165,6 @@ function Dashboard() {
                 </Grid>
               </Grid>
             </VuiBox>
-            <Grid
-              container
-              spacing={3}
-              direction="row"
-              justifyContent="center"
-              alignItems="stretch"
-            >
-              <Grid item xs={12} md={6} lg={8}>
-                <Projects />
-              </Grid>
-              <Grid item xs={12} md={6} lg={4}>
-                <OrderOverview />
-              </Grid>
-            </Grid>
           </>
         )}
       </VuiBox>

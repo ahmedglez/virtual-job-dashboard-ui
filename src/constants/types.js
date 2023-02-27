@@ -22,3 +22,4 @@ export const SET_PENDING_TASK = "SET_PENDING_TASK";
 
 /* ADMIN TYPES */
 export const SET_TASKS = "SET_TASKS"
+export const SET_USERS = "SET_USERS"
